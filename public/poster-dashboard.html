@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job - WorkLink</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* ── Notification Bell ── */
+        .notif-btn {
+            position: relative;
+            background: none;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .notif-btn:hover { border-color: #2563eb; background: #eff6ff; }
+
+        .notif-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 0.65em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none; /* hidden until there are unread */
+        }
+
+        /* ── Notification Panel ── */
+        .notif-panel {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        .notif-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .mark-read-btn {
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .mark-read-btn:hover { background: #1d4ed8; }
+
+        .applicant-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            transition: border-color 0.3s;
+        }
+        .applicant-card.unread {
+            border-left: 5px solid #2563eb;
+            background: #eff6ff;
+        }
+        .applicant-card:last-child { margin-bottom: 0; }
+
+        .applicant-info { flex: 1; }
+        .applicant-name { font-size: 1.1em; font-weight: 700; color: #1f2937; margin-bottom: 6px; }
+        .applicant-detail { color: #6b7280; font-size: 0.95em; margin: 3px 0; }
+
+        .applicant-job-tag {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .applicant-time {
+            font-size: 0.82em;
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .page-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .form-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #1f2937;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            color: #4b5563;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #dc2626;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #10b981;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .my-jobs-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .jobs-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .job-item {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .job-item:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+        }
+
+        .job-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .job-item-title {
+            font-size: 1.5em;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .job-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        .job-item-info {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .job-item-wage {
+            font-size: 1.3em;
+            color: #10b981;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 1.8em;
+            }
+            .form-section, .my-jobs-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">🔧 WorkLink</div>
+            <div class="nav-right">
+                <div class="user-info" id="userInfo">Loading...</div>
+                <button class="notif-btn" onclick="openNotifications()" title="Notifications">
+                    🔔
+                    <span class="notif-badge" id="notifBadge">0</span>
+                </button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Post a New Job</h1>
+            <p>Fill in the details to find the right worker for your project</p>
+        </div>
+
+        <div class="form-section">
+            <div class="section-title">Job Details</div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <form id="jobForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Job Type *</label>
+                        <select name="type" required>
+                            <option value="">Select job type</option>
+                            <option value="Carpenter">Carpenter</option>
+                            <option value="Plumber">Plumber</option>
+                            <option value="Electrician">Electrician</option>
+                            <option value="Painter">Painter</option>
+                            <option value="Mason">Mason</option>
+                            <option value="Welder">Welder</option>
+                            <option value="AC Technician">AC Technician</option>
+                            <option value="Tile Fitter">Tile Fitter</option>
+                            <option value="Gardener">Gardener</option>
+                            <option value="Cleaning Staff">Cleaning Staff</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Urgency Level *</label>
+                        <select name="urgency" required>
+                            <option value="">Select urgency</option>
+                            <option value="High">High (Urgent)</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Flexible</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location/Area *</label>
+                        <input type="text" name="location" required placeholder="e.g., MG Road, Pithumpur">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Time *</label>
+                        <input type="text" name="time" required placeholder="e.g., Today 2 PM, Tomorrow morning">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration *</label>
+                        <input type="text" name="duration" required placeholder="e.g., 2-3 days, 1 week">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Daily Wage (₹) *</label>
+                        <input type="number" name="wage" required placeholder="Enter daily wage amount" min="0">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Full Address *</label>
+                        <input type="text" name="address" required placeholder="Complete address with landmarks">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Job Description *</label>
+                        <textarea name="description" required placeholder="Describe the work to be done in detail..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Post Job</button>
+            </form>
+        </div>
+
+        <!-- Notifications / Applicants Panel -->
+        <div class="notif-panel" id="notifPanel" style="display:none;">
+            <div class="notif-panel-header">
+                <div class="section-title" style="margin-bottom:0;">🔔 Applicants</div>
+                <button class="mark-read-btn" onclick="markAllRead()">Mark All as Read</button>
+            </div>
+            <div id="notifList">
+                <p style="text-align:center; color:#6b7280;">Loading notifications...</p>
+            </div>
+        </div>
+
+        <div class="my-jobs-section">
+            <div class="section-title">My Posted Jobs</div>
+            <div class="jobs-list" id="jobsList">
+                <p style="text-align: center; color: #6b7280;">Loading your jobs...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let token = localStorage.getItem('token');
+        let user = JSON.parse(localStorage.getItem('user'));
+
+        // Check authentication
+        if (!token || !user || user.userType !== 'poster') {
+            window.location.href = 'login.html';
+        }
+
+        // Display user info
+        document.getElementById('userInfo').textContent = `Welcome, ${user.name}`;
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => { successDiv.style.display = 'none'; }, 5000);
+        }
+
+        // ── NOTIFICATION FUNCTIONS ──────────────────────────────────────────
+
+        // Load notifications from the server and update the badge count
+        async function loadNotifications() {
+            try {
+                const response = await fetch(`${API_URL}/notifications`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                // Update the red badge on the bell icon
+                const badge = document.getElementById('notifBadge');
+                if (data.unreadCount > 0) {
+                    badge.textContent = data.unreadCount;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+
+                // Render the list of applicants
+                renderNotifications(data.notifications);
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        function renderNotifications(notifications) {
+            const list = document.getElementById('notifList');
+
+            if (!notifications || notifications.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:#6b7280;">No applicants yet. Once someone applies for your job, they will appear here.</p>';
+                return;
+            }
+
+            list.innerHTML = notifications.map(n => {
+                const date = new Date(n.createdAt);
+                // Format: "12 Jun 2025, 3:45 PM"
+                const timeStr = date.toLocaleString('en-IN', {
+                    day: 'numeric', month: 'short', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+
+                return `
+                    <div class="applicant-card ${n.isRead ? '' : 'unread'}">
+                        <div class="applicant-info">
+                            <div class="applicant-name">👷 ${n.applicantName}</div>
+                            <div class="applicant-detail">📧 ${n.applicantEmail}</div>
+                            <div class="applicant-detail">📞 ${n.applicantPhone}</div>
+                            <div class="applicant-time">⏰ Applied on ${timeStr}</div>
+                        </div>
+                        <div>
+                            <span class="applicant-job-tag">🔧 ${n.jobType}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Show/hide the notifications panel and mark as read when opened
+        async function openNotifications() {
+            const panel = document.getElementById('notifPanel');
+            const isVisible = panel.style.display !== 'none';
+
+            if (isVisible) {
+                // Toggle off
+                panel.style.display = 'none';
+            } else {
+                // Show panel, scroll to it
+                panel.style.display = 'block';
+                panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Mark all as read automatically when the poster opens the panel
+                await markAllRead();
+            }
+        }
+
+        async function markAllRead() {
+            try {
+                await fetch(`${API_URL}/notifications/mark-read`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                // Refresh so unread highlights and badge count are updated
+                await loadNotifications();
+            } catch (error) {
+                console.error('Error marking notifications as read:', error);
+            }
+        }
+
+        // ── JOB FORM ───────────────────────────────────────────────────────
+
+        document.getElementById('jobForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Posting Job...';
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch(`${API_URL}/jobs`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Job posted successfully!');
+                    e.target.reset();
+                    loadMyJobs();
+                } else {
+                    showError(result.error || 'Failed to post job');
+                }
+            } catch (error) {
+                console.error('Error posting job:', error);
+                showError('Network error. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Post Job';
+            }
+        });
+
+        // ── MY POSTED JOBS ────────────────────────────────────────────────
+
+        async function loadMyJobs() {
+            try {
+                const response = await fetch(`${API_URL}/jobs/user/posted`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const jobs = await response.json();
+                const jobsList = document.getElementById('jobsList');
+
+                if (jobs.length === 0) {
+                    jobsList.innerHTML = '<p style="text-align: center; color: #6b7280;">You haven\'t posted any jobs yet.</p>';
+                    return;
+                }
+
+                jobsList.innerHTML = jobs.map(job => `
+                    <div class="job-item">
+                        <div class="job-item-header">
+                            <div class="job-item-title">${job.type}</div>
+                            <div class="job-item-actions">
+                                <button class="btn-small btn-delete" onclick="deleteJob('${job._id}')">Delete</button>
+                            </div>
+                        </div>
+                        <div class="job-item-info">
+                            📍 ${job.location}<br>
+                            ⏰ ${job.time}<br>
+                            📅 Duration: ${job.duration}<br>
+                            🔔 Urgency: ${job.urgency}<br>
+                            📝 ${job.description}
+                        </div>
+                        <div class="job-item-wage">₹${job.wage}/day</div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                document.getElementById('jobsList').innerHTML = '<p style="text-align: center; color: #ef4444;">Error loading jobs</p>';
+            }
+        }
+
+        async function deleteJob(jobId) {
+            if (!confirm('Are you sure you want to delete this job?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/jobs/${jobId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    showSuccess('Job deleted successfully');
+                    loadMyJobs();
+                } else {
+                    showError('Failed to delete job');
+                }
+            } catch (error) {
+                console.error('Error deleting job:', error);
+                showError('Network error. Please try again.');
+            }
+        }
+
+        // ── INIT ──────────────────────────────────────────────────────────
+        loadMyJobs();
+        loadNotifications();
+
+        // Poll for new notifications every 30 seconds (no Socket.io needed)
+        // This means the badge updates automatically if a new application comes in
+        setInterval(loadNotifications, 30000);
+    </script>
+</body>
+</html>

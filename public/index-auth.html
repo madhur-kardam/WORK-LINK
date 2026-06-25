@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs - WorkLink</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.8em; font-weight: 700; color: #2563eb; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info { color: #4b5563; font-weight: 500; }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 15px; }
+
+        .filters {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group label {
+            color: #4b5563;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .jobs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #2563eb;
+        }
+
+        .job-type {
+            font-size: 1.5em;
+            color: #1f2937;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .job-details { margin: 20px 0; color: #6b7280; }
+        .detail-row { margin: 10px 0; }
+
+        .wage {
+            font-size: 1.5em;
+            color: #10b981;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .apply-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .apply-btn.applied {
+            background: #10b981;
+            cursor: default;
+        }
+
+        .urgency-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: white;
+        }
+
+        .urgency-high { background: #ef4444; }
+        .urgency-medium { background: #f59e0b; }
+        .urgency-low { background: #10b981; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">🔧 WorkLink</div>
+            <div class="nav-right">
+                <div class="user-info" id="userInfo">Loading...</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Find Your Next Opportunity</h1>
+            <p>Browse and apply for jobs in Pithumpur</p>
+        </div>
+
+        <div class="filters">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Work Type</label>
+                    <select id="workTypeFilter">
+                        <option value="all">All Jobs</option>
+                        <option value="Carpenter">Carpenter</option>
+                        <option value="Plumber">Plumber</option>
+                        <option value="Electrician">Electrician</option>
+                        <option value="Painter">Painter</option>
+                        <option value="Mason">Mason</option>
+                        <option value="Welder">Welder</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Location</label>
+                    <input type="text" id="locationFilter" placeholder="Search location...">
+                </div>
+                <div class="filter-group">
+                    <label>Urgency</label>
+                    <select id="urgencyFilter">
+                        <option value="all">All</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="jobs-container" id="jobsContainer">
+            <p style="text-align: center;">Loading jobs...</p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let token = localStorage.getItem('token');
+        let user = JSON.parse(localStorage.getItem('user'));
+        let allJobs = [];
+
+        if (!token || !user) {
+            window.location.href = 'login.html';
+        }
+
+        document.getElementById('userInfo').textContent = `Welcome, ${user.name}`;
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        async function loadJobs() {
+            try {
+                const response = await fetch(`${API_URL}/jobs`);
+                allJobs = await response.json();
+                filterAndRenderJobs();
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                document.getElementById('jobsContainer').innerHTML = '<p>Error loading jobs</p>';
+            }
+        }
+
+        function filterAndRenderJobs() {
+            const type = document.getElementById('workTypeFilter').value;
+            const location = document.getElementById('locationFilter').value.toLowerCase();
+            const urgency = document.getElementById('urgencyFilter').value;
+
+            let filtered = allJobs.filter(job => {
+                const matchType = type === 'all' || job.type === type;
+                const matchLocation = location === '' || job.location.toLowerCase().includes(location);
+                const matchUrgency = urgency === 'all' || job.urgency === urgency;
+                return matchType && matchLocation && matchUrgency;
+            });
+
+            renderJobs(filtered);
+        }
+
+        function renderJobs(jobs) {
+            const container = document.getElementById('jobsContainer');
+            
+            if (jobs.length === 0) {
+                container.innerHTML = '<p style="text-align: center;">No jobs found</p>';
+                return;
+            }
+
+            container.innerHTML = jobs.map(job => `
+                <div class="job-card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div class="job-type">${job.type}</div>
+                        <span class="urgency-badge urgency-${job.urgency.toLowerCase()}">${job.urgency}</span>
+                    </div>
+                    <div class="job-details">
+                        <div class="detail-row">📍 ${job.location}</div>
+                        <div class="detail-row">⏰ ${job.time}</div>
+                        <div class="detail-row">📅 ${job.duration}</div>
+                        <div class="detail-row">${job.description}</div>
+                    </div>
+                    <div class="wage">₹${job.wage}/day</div>
+                    <button class="apply-btn" onclick="applyForJob('${job._id}', this)" id="btn-${job._id}">
+                        Apply Now
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function applyForJob(jobId, button) {
+            if (button.classList.contains('applied')) return;
+
+            button.disabled = true;
+            button.textContent = 'Applying...';
+
+            try {
+                const response = await fetch(`${API_URL}/applications`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ jobId })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    button.textContent = '✓ Applied';
+                    button.classList.add('applied');
+                    alert('Application submitted successfully!');
+                    
+                    // Store for receipt
+                    localStorage.setItem('selectedJob', JSON.stringify(result.job));
+                    localStorage.setItem('applicationData', JSON.stringify(result.application));
+                } else {
+                    alert(result.error || 'Application failed');
+                    button.disabled = false;
+                    button.textContent = 'Apply Now';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Network error. Please try again.');
+                button.disabled = false;
+                button.textContent = 'Apply Now';
+            }
+        }
+
+        document.getElementById('workTypeFilter').addEventListener('change', filterAndRenderJobs);
+        document.getElementById('locationFilter').addEventListener('input', filterAndRenderJobs);
+        document.getElementById('urgencyFilter').addEventListener('change', filterAndRenderJobs);
+
+        loadJobs();
+    </script>
+</body>
+</html>
