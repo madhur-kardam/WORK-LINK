@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkLink - Find Daily Work</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 80px 40px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .hero-section h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .content-section h2 {
+            color: #1f2937;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .content-section h2 span {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .content-section p {
+            color: #4b5563;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: #f9fafb;
+            padding: 35px;
+            border-radius: 15px;
+            border-left: 5px solid #2563eb;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #1f2937;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #2563eb;
+        }
+
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #1f2937;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .mv-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 40px;
+            border-radius: 15px;
+            border-top: 5px solid #2563eb;
+        }
+
+        .mv-card h3 {
+            color: #1f2937;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .mv-card h3 span {
+            margin-right: 15px;
+            font-size: 1.3em;
+        }
+
+        .mv-card p {
+            color: #4b5563;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .team-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .team-section h2 {
+            color: #1f2937;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .member-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .member-name {
+            color: #1f2937;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .member-role {
+            color: #2563eb;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .member-desc {
+            color: #6b7280;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: white;
+            color: #2563eb;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2em; }
+            .mission-vision { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.2em;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 1em;
+        }
+
+        .filters {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .filter-title {
+            font-size: 1.3em;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group label {
+            color: #4b5563;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: white;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .filter-group select:focus, .filter-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .jobs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .jobs-count {
+            font-size: 1.3em;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .jobs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border-left: 5px solid #2563eb;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .job-type {
+            font-size: 1.5em;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .urgency-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: white;
+        }
+
+        .urgency-high { background: #ef4444; }
+        .urgency-medium { background: #f59e0b; }
+        .urgency-low { background: #10b981; }
+
+        .job-details {
+            margin: 20px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            color: #6b7280;
+        }
+
+        .detail-icon {
+            width: 20px;
+            margin-right: 12px;
+            font-size: 1.1em;
+        }
+
+        .posted-by {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 0.95em;
+            color: #1f2937;
+        }
+
+        .posted-by strong {
+            color: #2563eb;
+        }
+
+        .description {
+            color: #6b7280;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .wage {
+            font-size: 1.5em;
+            color: #10b981;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .apply-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: scale(1.02);
+        }
+
+        .apply-btn.applied {
+            background: #10b981;
+            cursor: default;
+        }
+
+        .apply-btn.applied:hover {
+            background: #10b981;
+            transform: none;
+        }
+
+        .confirmation-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            font-weight: 600;
+            border-left: 4px solid #10b981;
+            display: none;
+        }
+
+        .job-details-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .job-details-btn:hover {
+            background: #eff6ff;
+        }
+
+        .no-jobs {
+            text-align: center;
+            color: #6b7280;
+            font-size: 1.3em;
+            padding: 60px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .filter-grid { grid-template-columns: 1fr; }
+            .jobs-container { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">🔧 WorkLink</div>
+            <div class="nav-links">
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Find Your Next Opportunity</h1>
+            <p>Connect with local employers in Pithumpur</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Active Jobs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Workers Hired</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Employers</div>
+            </div>
+        </div>
+
+       <div class="container">
+        <div class="hero-section">
+            <h1>About WorkLink</h1>
+            <p>Connecting skilled workers with opportunities and helping employers find the right talent for their projects in Pithumpur</p>
+        </div>
+
+        <div class="content-section">
+            <h2><span>📖</span> Our Story</h2>
+            <p>
+                WorkLink was founded with a simple yet powerful vision: to bridge the gap between skilled grey-collar workers and employers in Pithumpur. We understand the challenges that both workers and employers face - workers struggle to find consistent work opportunities, while employers often find it difficult to locate reliable, skilled workers when they need them.
+            </p>
+            <p>
+                Our platform was created to solve these challenges by providing a digital marketplace where workers can showcase their skills and find daily work opportunities, while employers can quickly connect with verified professionals for their projects. Since our inception, we've successfully facilitated thousands of job placements and helped build a stronger, more connected community.
+            </p>
+        </div>
+
+        <div class="mission-vision">
+            <div class="mv-card">
+                <h3><span>🎯</span> Our Mission</h3>
+                <p>
+                    To empower skilled workers by providing them with consistent job opportunities and fair wages, while helping employers find reliable talent efficiently. We strive to create a transparent, trustworthy platform that benefits both workers and employers equally.
+                </p>
+            </div>
+            <div class="mv-card">
+                <h3><span>👁️</span> Our Vision</h3>
+                <p>
+                    To become the leading platform for grey-collar job connections across India, setting the standard for worker empowerment, employer satisfaction, and community development. We envision a future where every skilled worker has access to dignified work opportunities.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2><span>✨</span> What Makes Us Different</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Trust & Transparency</h3>
+                    <p>We verify all job postings and maintain transparent communication between workers and employers, ensuring a safe and reliable experience for everyone.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Quick Connections</h3>
+                    <p>Our platform enables instant connections between workers and employers, reducing the time it takes to find work or hire skilled professionals.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Fair Wages</h3>
+                    <p>We promote fair compensation for workers and help employers understand market rates, ensuring everyone gets a fair deal.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Easy to Use</h3>
+                    <p>Our simple, intuitive platform is designed for everyone - no technical expertise required. Find jobs or workers in just a few clicks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Filtering</h3>
+                    <p>Advanced search and filter options help workers find jobs that match their skills and employers find workers with the right expertise.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>Community Focus</h3>
+                    <p>We're committed to building a strong, supportive community of workers and employers who help each other succeed.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 style="text-align: center; margin-bottom: 40px;">📊 Our Impact</h2>
+            <div class="stats-section">
+                <div class="stat-box">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Workers Employed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Active Employers</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1500+</div>
+                    <div class="stat-label">Jobs Completed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h2>👥 Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-icon">👨‍💼</div>
+                    <div class="member-name">Madhur Kardam</div>
+                    <div class="member-role">Founder & CEO</div>
+                    <p class="member-desc">Passionate about empowering workers and transforming the grey-collar job market in India.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">👨‍💻</div>
+                    <div class="member-name">Bhupendra Kote</div>
+                    <div class="member-role">Head of Operations</div>
+                    <p class="member-desc">Ensuring smooth platform operations and excellent user experience for all stakeholders.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">👨‍🔧</div>
+                    <div class="member-name">Yash Pawar</div>
+                    <div class="member-role">Community Manager</div>
+                    <p class="member-desc">Building strong relationships with workers and employers to foster a supportive community.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-icon">🧑‍💼</div>
+                    <div class="member-name">Dheeraj Singh Baghel</div>
+                    <div class="member-role">Customer Support Lead</div>
+                    <p class="member-desc">Dedicated to providing exceptional support and resolving queries promptly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Get Started?</h2>
+            <p>Join thousands of workers and employers who trust WorkLink for their job needs</p>
+            <a href="register.html" class="cta-button">Find Jobs Now</a>
+        </div>
+    </div>
+
+       
+    </div>
+
+    <script>
+        
+
+        let filteredJobs = [...jobs];
+
+        function scrollToJobs(event) {
+            event.preventDefault();
+            document.getElementById('jobs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderJobs(jobsToRender) {
+            const container = document.getElementById('jobsContainer');
+            const countElement = document.getElementById('jobsCount');
+            
+            countElement.textContent = `${jobsToRender.length} Job${jobsToRender.length !== 1 ? 's' : ''} Available`;
+            
+            if (jobsToRender.length === 0) {
+                container.innerHTML = '<div class="no-jobs">No jobs found matching your filters</div>';
+                return;
+            }
+
+            container.innerHTML = jobsToRender.map(job => `
+                <div class="job-card" id="job-card-${job.id}">
+                    <div class="job-header">
+                        <div class="job-type">${job.type}</div>
+                        <span class="urgency-badge urgency-${job.urgency.toLowerCase()}">${job.urgency}</span>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="detail-row">
+                            <span class="detail-icon">📍</span>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-icon">⏰</span>
+                            <span>${job.time}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-icon">📅</span>
+                            <span>Duration: ${job.duration}</span>
+                        </div>
+                    </div>
+
+                    <div class="posted-by">
+                        <strong>Posted by:</strong> ${job.postedBy}
+                    </div>
+
+                    <div class="description">${job.description}</div>
+
+                    <div class="wage">₹${job.wage}/day</div>
+
+                    <div class="confirmation-message" id="confirm-msg-${job.id}">
+                        ✅ Application submitted successfully!
+                    </div>
+
+                    <button class="apply-btn" id="apply-btn-${job.id}" onclick="applyForJob(${job.id})">Apply Now</button>
+                    <button class="job-details-btn" id="details-btn-${job.id}" onclick="viewJobDetails(${job.id})">View Job Details</button>
+                </div>
+            `).join('');
+        }
+
+        function filterJobs() {
+            const workType = document.getElementById('workTypeFilter').value;
+            const location = document.getElementById('locationFilter').value.toLowerCase();
+            const urgency = document.getElementById('urgencyFilter').value;
+
+            filteredJobs = jobs.filter(job => {
+                const matchesType = workType === 'all' || job.type === workType;
+                const matchesLocation = location === '' || job.location.toLowerCase().includes(location);
+                const matchesUrgency = urgency === 'all' || job.urgency === urgency;
+                
+                return matchesType && matchesLocation && matchesUrgency;
+            });
+
+            sortJobs();
+        }
+
+        function sortJobs() {
+            const sortValue = document.getElementById('sortSelect').value;
+            let sorted = [...filteredJobs];
+
+            switch(sortValue) {
+                case 'wage-high':
+                    sorted.sort((a, b) => b.wage - a.wage);
+                    break;
+                case 'wage-low':
+                    sorted.sort((a, b) => a.wage - b.wage);
+                    break;
+                case 'urgency':
+                    const urgencyOrder = { 'High': 1, 'Medium': 2, 'Low': 3 };
+                    sorted.sort((a, b) => urgencyOrder[a.urgency] - urgencyOrder[b.urgency]);
+                    break;
+            }
+
+            renderJobs(sorted);
+        }
+
+        function applyForJob(jobId) {
+            // Show confirmation message
+            const confirmMsg = document.getElementById(`confirm-msg-${jobId}`);
+            confirmMsg.style.display = 'block';
+
+            // Update apply button
+            const applyBtn = document.getElementById(`apply-btn-${jobId}`);
+            applyBtn.textContent = '✓ Applied';
+            applyBtn.classList.add('applied');
+            applyBtn.disabled = true;
+
+            // Show job details button
+            const detailsBtn = document.getElementById(`details-btn-${jobId}`);
+            detailsBtn.style.display = 'block';
+
+            // Scroll to the card
+            const jobCard = document.getElementById(`job-card-${jobId}`);
+            jobCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function viewJobDetails(jobId) {
+            const job = jobs.find(j => j.id === jobId);
+            localStorage.setItem('selectedJob', JSON.stringify(job));
+            window.location.href = 'receipt.html';
+        }
+
+        document.getElementById('workTypeFilter').addEventListener('change', filterJobs);
+        document.getElementById('locationFilter').addEventListener('input', filterJobs);
+        document.getElementById('urgencyFilter').addEventListener('change', filterJobs);
+        document.getElementById('sortSelect').addEventListener('change', sortJobs);
+
+        renderJobs(jobs);
+    </script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - WorkLink</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 80px 40px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .page-header h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .contact-form-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .contact-form-section h2 {
+            color: #1f2937;
+            font-size: 2em;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-form-section h2 span {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #4b5563;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .contact-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .info-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .info-card h3 {
+            color: #1f2937;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .info-card a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .info-card a:hover {
+            color: #1d4ed8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 50%;
+            font-size: 1.5em;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .faq-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 50px;
+        }
+
+        .faq-section h2 {
+            color: #1f2937;
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            padding: 25px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border-left: 5px solid #2563eb;
+        }
+
+        .faq-question {
+            color: #1f2937;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .faq-answer {
+            color: #6b7280;
+            font-size: 1em;
+            line-height: 1.7;
+        }
+
+        .map-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .map-section h2 {
+            color: #1f2937;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #2563eb;
+            border: 3px dashed #2563eb;
+        }
+
+        .success-message {
+            display: none;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 5px solid #10b981;
+            font-weight: 600;
+        }
+
+        @media (max-width: 968px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 2em;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">🔧 WorkLink</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#jobs">Find Jobs</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Get in Touch</h1>
+            <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-form-section">
+                <h2><span>✉️</span> Send Us a Message</h2>
+                <div class="success-message" id="successMessage">
+                    ✅ Thank you! Your message has been sent successfully. We'll get back to you soon.
+                </div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" placeholder="+91 98765 43210">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <select name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="worker">I'm a Worker</option>
+                            <option value="employer">I'm an Employer</option>
+                            <option value="support">Technical Support</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="partnership">Partnership Opportunity</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message *</label>
+                        <textarea name="message" required placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="contact-info-section">
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <h3>Our Office</h3>
+                    <p>
+                        WorkLink Headquarters<br>
+                        45, MG Road, Pithumpur<br>
+                        Madhya Pradesh - 453771<br>
+                        India
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <h3>Call Us</h3>
+                    <p>
+                        Phone: <a href="tel:+919876543210">+91 98765 43210</a><br>
+                        Toll Free: <a href="tel:18001234567">1800 123 4567</a><br>
+                        Available: Mon-Sat, 9 AM - 6 PM
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">✉️</div>
+                    <h3>Email Us</h3>
+                    <p>
+                        General: <a href="mailto:info@worklink.com">info@worklink.com</a><br>
+                        Support: <a href="mailto:support@worklink.com">support@worklink.com</a><br>
+                        Jobs: <a href="mailto:jobs@worklink.com">jobs@worklink.com</a>
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🌐</div>
+                    <h3>Follow Us</h3>
+                    <p>Stay connected with us on social media</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" title="Facebook">📘</a>
+                        <a href="#" class="social-btn" title="Twitter">🐦</a>
+                        <a href="#" class="social-btn" title="Instagram">📷</a>
+                        <a href="#" class="social-btn" title="LinkedIn">💼</a>
+                        <a href="#" class="social-btn" title="WhatsApp">💬</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">How do I register as a worker?</div>
+                <div class="faq-answer">Currently, you can browse jobs and apply directly through our platform. We're working on a full registration system that will allow you to create a profile and receive job notifications.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How can employers post jobs?</div>
+                <div class="faq-answer">Employers can contact us via phone or email to post job requirements. We verify all job postings to ensure they meet our quality standards before they go live on the platform.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is there any fee to use WorkLink?</div>
+                <div class="faq-answer">For workers, using WorkLink to find jobs is completely free. Employers pay a nominal fee for posting job listings, which helps us maintain and improve the platform.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I report an issue?</div>
+                <div class="faq-answer">You can report any issues by calling our support line, sending an email to support@worklink.com, or using the contact form on this page. We aim to respond to all queries within 24 hours.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What types of jobs are available?</div>
+                <div class="faq-answer">We list various grey-collar jobs including Carpenter, Plumber, Electrician, Painter, Mason, Welder, AC Technician, Tile Fitter, Gardener, and more. New categories are added based on demand.</div>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <h2>📍 Find Us on the Map</h2>
+            <div class="map-placeholder">
+                🗺️ WorkLink Office - 45, MG Road, Pithumpur, MP 453771
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Hide message after 5 seconds
+            setTimeout(function() {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
