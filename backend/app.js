@@ -12,7 +12,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: 'https://work-link-frontend.onrender.com/',
+  credentials: true
+}));
 app.use(cookieParser());
 
 // MongoDB Connection

@@ -48,6 +48,7 @@ export async function request(path, { method = 'GET', body, auth = false } = {})
     return fetch(`${API_URL}${path}`, {
       method,
       headers,
+      credentials: 'include',
       body: body !== undefined ? JSON.stringify(body) : undefined
     });
   };
