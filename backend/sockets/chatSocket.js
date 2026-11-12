@@ -8,7 +8,13 @@ const room = (applicationId) => `chat:${applicationId}`;
 const errorText = (error) => (error instanceof HttpError ? error.message : 'Server error');
 
 const initSocket = (httpServer) => {
-  const io = new Server(httpServer, { cors: { origin: '*' } });
+  const io = new Server(httpServer, {
+  cors: {
+    origin: 'https://work-link-frontend.onrender.com',
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
 
   // 1) Authenticate every connection with the same JWT used by the REST API
   io.use((socket, next) => {
