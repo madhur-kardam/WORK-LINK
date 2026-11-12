@@ -1,4 +1,4 @@
-const API_URL = '/api';
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // The access token lives ONLY in memory (never in localStorage), so an XSS attack
 // can't steal a long-lived login from storage.
