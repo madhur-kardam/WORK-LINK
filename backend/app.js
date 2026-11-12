@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'https://work-link-frontend.onrender.com/',
+  origin: 'https://work-link-frontend.onrender.com',
   credentials: true
 }));
 app.use(cookieParser());
