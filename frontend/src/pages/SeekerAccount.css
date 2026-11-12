@@ -1,0 +1,438 @@
+.account-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* ── Account panel (under navbar) ── */
+.account-page .account-panel {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+.account-page .account-panel-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.account-page .account-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: white;
+  color: #2563eb;
+  font-size: 2.6em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.account-page .account-panel-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.account-page .account-name {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.account-page .account-designation {
+  font-size: 1.1em;
+  opacity: 0.95;
+}
+
+.account-page .account-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.account-page .back-btn {
+  padding: 10px 20px;
+  background: white;
+  color: #2563eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.account-page .back-btn:hover {
+  background: #eff6ff;
+}
+
+.account-page .back-btn.dark {
+  background: #2563eb;
+  color: white;
+  margin-top: 15px;
+}
+
+.account-page .back-btn.dark:hover {
+  background: #1d4ed8;
+}
+
+.account-page .logout-btn {
+  padding: 10px 20px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.account-page .logout-btn:hover {
+  background: #dc2626;
+}
+
+/* ── Layout ── */
+.account-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.account-page .account-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.account-page .account-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.account-page .account-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.account-page .account-state {
+  text-align: center;
+}
+
+.account-page .section-title {
+  font-size: 1.8em;
+  color: #1f2937;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.account-page .empty-text {
+  text-align: center;
+  color: #6b7280;
+}
+
+/* ── Info rows ── */
+.account-page .info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.account-page .info-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.account-page .info-row-icon {
+  width: 24px;
+  font-size: 1.2em;
+}
+
+.account-page .info-row-label {
+  color: #6b7280;
+  font-size: 0.9em;
+  margin-bottom: 3px;
+}
+
+.account-page .info-row-value {
+  color: #1f2937;
+  font-weight: 600;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* ── Stats ── */
+.account-page .stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 15px;
+}
+
+.account-page .stat-box {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  padding: 25px 15px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid #2563eb;
+}
+
+.account-page .stat-number {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 6px;
+}
+
+.account-page .stat-label {
+  color: #1f2937;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+/* ── Responders / responses ── */
+.account-page .responder-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+}
+
+.account-page .responder-card:last-child {
+  margin-bottom: 0;
+}
+
+.account-page .responder-card:hover {
+  border-color: #2563eb;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+}
+
+.account-page .responder-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+.account-page .responder-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 700;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.account-page .responder-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.account-page .responder-name {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.account-page .responder-detail {
+  color: #6b7280;
+  font-size: 0.95em;
+  margin-top: 3px;
+}
+
+.account-page .chat-btn {
+  padding: 8px 16px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.account-page .chat-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.account-page .response-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.account-page .response-job {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.account-page .response-meta {
+  color: #6b7280;
+  font-size: 0.9em;
+  margin-top: 3px;
+}
+
+.account-page .status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.account-page .status-pending { background: #f59e0b; }
+.account-page .status-accepted { background: #10b981; }
+.account-page .status-rejected { background: #ef4444; }
+
+/* ── Chat card ── */
+.account-page .chat-card {
+  position: sticky;
+  top: 100px;
+}
+
+.account-page .chat-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.account-page .chat-contact {
+  padding: 6px 14px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.account-page .chat-contact.active,
+.account-page .chat-contact:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.account-page .chat-with {
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.account-page .chat-body {
+  height: 300px;
+  overflow-y: auto;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.account-page .chat-body .empty-text {
+  margin: auto;
+}
+
+.account-page .chat-message {
+  align-self: flex-end;
+  max-width: 80%;
+}
+
+.account-page .chat-bubble {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px 12px 2px 12px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.account-page .chat-time {
+  font-size: 0.75em;
+  color: #9ca3af;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.account-page .chat-form {
+  display: flex;
+  gap: 10px;
+}
+
+.account-page .chat-form input {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s;
+}
+
+.account-page .chat-form input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.account-page .send-btn {
+  padding: 0 24px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.account-page .send-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+}
+
+@media (max-width: 900px) {
+  .account-page .account-grid {
+    grid-template-columns: 1fr;
+  }
+  .account-page .chat-card {
+    position: static;
+  }
+  .account-page .account-panel-inner {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .account-page .account-card {
+    padding: 30px 20px;
+  }
+  .account-page .account-name {
+    font-size: 1.5em;
+  }
+}

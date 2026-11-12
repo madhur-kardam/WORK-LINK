@@ -1,0 +1,54 @@
+.cb-status { font-size: 0.85em; color: #6b7280; margin-bottom: 10px; }
+
+.cb-error {
+  background: #fee2e2; color: #dc2626; padding: 10px 12px; border-radius: 8px;
+  margin-bottom: 12px; font-size: 0.9em; border-left: 4px solid #dc2626;
+}
+
+.cb-body {
+  height: 300px; overflow-y: auto; background: #f9fafb; border: 2px solid #e5e7eb;
+  border-radius: 12px; padding: 20px; display: flex; flex-direction: column;
+  gap: 12px; margin-bottom: 15px;
+}
+
+.cb-empty { margin: auto; text-align: center; color: #6b7280; }
+
+.cb-message { max-width: 80%; }
+.cb-message.mine { align-self: flex-end; }
+.cb-message.theirs { align-self: flex-start; }
+
+.cb-bubble { padding: 10px 14px; line-height: 1.5; word-break: break-word; }
+
+.cb-message.mine .cb-bubble {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white; border-radius: 12px 12px 2px 12px;
+}
+
+.cb-message.theirs .cb-bubble {
+  background: white; color: #1f2937; border: 2px solid #e5e7eb;
+  border-radius: 12px 12px 12px 2px;
+}
+
+.cb-time { font-size: 0.75em; color: #9ca3af; margin-top: 4px; }
+.cb-message.mine .cb-time { text-align: right; }
+
+.cb-form { display: flex; gap: 10px; }
+
+.cb-form input {
+  flex: 1; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px;
+  font-size: 1em; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s;
+}
+
+.cb-form input:focus {
+  outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.cb-send {
+  padding: 0 24px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white; border: none; border-radius: 10px; font-size: 1em; font-weight: 600;
+  cursor: pointer; transition: all 0.3s;
+}
+
+.cb-send:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
+.cb-send:disabled { opacity: 0.6; cursor: not-allowed; }

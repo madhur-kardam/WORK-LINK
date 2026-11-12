@@ -1,0 +1,236 @@
+.register-page {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-page .register-container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  max-width: 500px;
+  width: 100%;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register-page .register-header {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  padding: 40px;
+  text-align: center;
+  color: white;
+}
+
+.register-page .register-header .logo {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.register-page .register-header h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.register-page .register-header p {
+  opacity: 0.95;
+  font-size: 1.1em;
+}
+
+.register-page .register-body {
+  padding: 40px;
+}
+
+.register-page .form-group {
+  margin-bottom: 25px;
+}
+
+.register-page .form-group label {
+  display: block;
+  color: #4b5563;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.register-page .form-group input,
+.register-page .form-group select {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+
+.register-page .form-group input:focus,
+.register-page .form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.register-page .error-message {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.95em;
+  display: none;
+  border-left: 4px solid #dc2626;
+}
+
+.register-page .success-message {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.95em;
+  display: none;
+  border-left: 4px solid #10b981;
+}
+
+.register-page .register-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.register-page .register-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.register-page .register-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.register-page .divider {
+  text-align: center;
+  margin: 25px 0;
+  position: relative;
+}
+
+.register-page .divider::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.register-page .divider span {
+  background: white;
+  padding: 0 15px;
+  color: #6b7280;
+  position: relative;
+  z-index: 1;
+}
+
+.register-page .login-link {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1em;
+}
+
+.register-page .login-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-page .login-link a:hover {
+  text-decoration: underline;
+}
+
+.register-page .user-type-selection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.register-page .user-type-card {
+  padding: 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.register-page .user-type-card:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.register-page .user-type-card input[type="radio"] {
+  display: none;
+}
+
+.register-page .user-type-card input[type="radio"]:checked + label {
+  color: #2563eb;
+}
+
+.register-page .user-type-card.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.register-page .user-type-icon {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.register-page .user-type-title {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 5px;
+}
+
+.register-page .user-type-desc {
+  font-size: 0.85em;
+  color: #6b7280;
+}
+
+@media (max-width: 500px) {
+  .register-page .register-header h1 {
+    font-size: 1.5em;
+  }
+
+  .register-page .register-body {
+    padding: 30px 20px;
+  }
+
+  .register-page .user-type-selection {
+    grid-template-columns: 1fr;
+  }
+}
